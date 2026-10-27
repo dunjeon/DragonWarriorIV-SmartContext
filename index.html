@@ -4,37 +4,71 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dragon Warrior IV — Smart Context</title>
+  <meta name="description" content="A BPS patch for USA Dragon Warrior IV: page clear for a screen reader, Smart A, the Select menu, Set AI, and battle tactics from the first chapter.">
   <style>
     :root { color-scheme: light dark; }
     body { margin: 0 auto; max-width: 42rem; padding: 2.5rem 1.25rem 4rem; font: 1.05rem/1.55 system-ui, sans-serif; }
     h1 { font-size: 1.8rem; line-height: 1.2; margin-bottom: 0.4rem; }
-    h2 { font-size: 1.2rem; margin-top: 2rem; }
+    h2 { font-size: 1.35rem; line-height: 1.25; margin-top: 2.2rem; }
     a { color: inherit; }
     .download { display: inline-block; margin: 1rem 0; padding: 0.7rem 1rem; background: #1f6feb; color: #fff; text-decoration: none; border-radius: 0.4rem; font-weight: 650; }
     table { border-collapse: collapse; width: 100%; }
     th, td { text-align: left; vertical-align: top; padding: 0.45rem 0.6rem; border-bottom: 1px solid #8884; }
-    code, pre { font-family: ui-monospace, monospace; }
-    ol li { margin: 0.35rem 0; }
-    .note { color: #888; }
+    code { font-family: ui-monospace, monospace; }
+    ol li, ul li { margin: 0.45rem 0; }
   </style>
 </head>
 <body>
   <h1>Dragon Warrior IV — Smart Context</h1>
-  <p>A free patch for the USA NES game Dragon Warrior IV. On the field, the A button tries Talk, then Door, then Search. Select opens the command menu.</p>
-  <p>This page does not include the game. You use your own unmodified USA ROM. Fan project. Not made by or affiliated with Enix, Square, or Nintendo. Made with Grok by xAI. <a href="https://github.com/dunjeon/DragonWarriorIV-SmartContext">MIT license</a>.</p>
-  <p><a class="download" href="dragon-warrior-iv-usa-smart-context.bps">Download the BPS patch</a></p>
-  <p><a href="dragon-warrior-iv-rom-hack-notes.docx">ROM hack notes (Word)</a> cover every change, including how the page clear and the button checks were built.</p>
+  <p>A free patch for the USA NES game Dragon Warrior IV. It changes five parts of the game, and each one stands on its own: the message window, the A button, the Select menu, Set AI, and battle tactics.</p>
+  <p>This page does not include the game. You use your own unmodified USA ROM. Fan project. Not made by or affiliated with Enix, Square, or Nintendo. Made with Grok by xAI. <a href="https://github.com/dunjeon/DragonWarriorIV-SmartContext/blob/main/LICENSE">MIT license</a>.</p>
+  <p><a class="download" href="dragon-warrior-iv-usa-smart-context.bps">Download the BPS patch (612 bytes)</a></p>
+  <p>The same file is on the <a href="https://github.com/dunjeon/DragonWarriorIV-SmartContext/releases/latest">GitHub release</a>. <a href="dragon-warrior-iv-rom-hack-notes.docx">ROM hack notes (Word)</a> describe how each change was built.</p>
+  <p>This website is its own page. The <a href="https://github.com/dunjeon/DragonWarriorIV-SmartContext">repository README</a> repeats these five features, because GitHub shows that file on the project page and shows this file on the website.</p>
 
-  <h2>What A does</h2>
+  <h2>Page clear</h2>
+  <p>The original message window scrolls. When more text is waiting, a continue mark appears under the block. Confirming that mark slides the old lines up and leaves some of them on screen. A screen reader then speaks those old lines again before it reaches the new text.</p>
+  <p>This patch clears the window. The next chunk is the only text in the box. That happens when you confirm the continue mark, and it happens again when the window is already full and the game needs another page.</p>
+  <p>A message can ask you to answer yes or no, or to pick something from a small menu. After that answer, older lines can stay in the window until the box fills or you confirm the continue mark. The clear still runs on the continue mark and when the window fills.</p>
+  <p>The continue-mark clear and the full-window clear were kept after they were used in play.</p>
+
+  <h2>Smart A</h2>
+  <p>On the field, A tries three commands in order and stops at the first one that applies.</p>
   <ol>
-    <li>Talk. It looks one tile ahead. If that tile is empty, it looks two tiles ahead, which is how shop counters are set up. The closer person wins.</li>
-    <li>Door, if nobody was there and the tile one step ahead is a door. A locked door still uses the real Door command. Search does not also run on that press.</li>
-    <li>Search, if it was not a door. Search may still say that nothing was found.</li>
+    <li>Door, if the tile one step ahead is a real door. The original Door command runs, so a locked door still asks for its key and still prints its own message. Talk does not run on that press. Search does not run on that press. The game waits until you release A, so the next check cannot Search while your finger is still down.</li>
+    <li>Talk, if that tile was not a door. Talk looks one tile ahead. If that tile is empty, it looks two tiles ahead. The closer person wins. The second look is there because a shopkeeper stands two tiles away, with the counter between you and them.</li>
+    <li>Search, if nobody was there. Search may still say that nothing was found. That line is part of the command.</li>
   </ol>
-  <p>Select opens the old command menu: Talk, Spell, Status, Item, Equip, Tactics, Door, and Search. Release Select after you choose or cancel.</p>
+  <p>A shop counter is stored in the same group of tiles as a door. Smart A leaves that counter alone and goes on to Talk, so the shopkeeper two tiles away is the person who answers. Door on the Select menu is still the original Door command, including on a shop counter.</p>
+  <p>Door comes first so a person standing on the far side of a door does not take the button press that should open the door. You can still choose Talk, Door, or another command yourself from the Select menu.</p>
+
+  <h2>The Select menu</h2>
+  <p>Select opens the command menu: Talk, Spell, Status, Item, Equip, Tactics, Door, and Set AI.</p>
+  <p>The old Search line is now Set AI. Smart A still searches the ground, so the menu does not need a second Search command.</p>
+  <p>Menu Talk looks two tiles ahead, and the closer person wins. It can reach a person through a one-tile wall. If both tiles are empty, it still says that nobody is there, and it still checks for an object in front of you. Smart A skips that object check and uses Door, then Talk, then Search instead.</p>
+  <p>Release Select after you choose a command or cancel. The menu was checked in play: Select opens it, and it stays closed until you press Select again.</p>
+
+  <h2>Set AI</h2>
+  <p>Set AI is the field command in the slot Search used to occupy. It asks the game's own yes or no question, then prints the result in the message window so a screen reader can speak it.</p>
+  <ul>
+    <li>Yes. The window says Player AI On. Tactics guide the controlled character the same way they already guide the rest of the party.</li>
+    <li>No. The window says Player AI Off. You enter that character's battle commands yourself, on the same fight menu as the original game.</li>
+    <li>Cancel. The setting stays where it was.</li>
+  </ul>
+  <p>A new game starts off. Any save that has never been switched on stays off too, so you get the original command menu until you choose Yes.</p>
+  <p>Choose it on the field, before the fight. Once the battle starts, that choice holds for the whole fight. Inside battle, Fight, Run, and Tactics still do their own jobs. Tactics changes the plan for the round. It leaves Player AI On or Player AI Off alone.</p>
+  <p>Everyone else in the party keeps using tactics either way. Set AI decides only whether the controlled character does too.</p>
+  <p>On and Off were both checked in play. On leaves that character to the tactic. Off opens the normal command menu for that character.</p>
+
+  <h2>Tactics from the start</h2>
+  <p>The original game waits until late in the story to show the tactics commands. This patch shows them from the first chapter.</p>
+  <p>Each round the battle menu is Fight, Run, or Tactics.</p>
+  <p>Fight plays that round with the tactic already picked. The party then fights that plan.</p>
+  <p>Tactics is where the plan changes. The plans are Normal, Offensive, Defensive, Save MP, Use No MP, and Try Out. That screen also lets you change tactics, see spells, or see items.</p>
+  <p>The tactic is the plan the round is fought with. With Player AI On, it is also the plan for the controlled character. With Player AI Off, the rest of the party still fights from it while you enter your own commands.</p>
 
   <h2>Apply the patch</h2>
-  <p>The ROM must be the unmodified USA release. The patch checks this and refuses a different file.</p>
+  <p>The ROM must be the unmodified USA release. Floating IPS checks the file and refuses a different one.</p>
   <table>
     <thead><tr><th>Check</th><th>Value</th></tr></thead>
     <tbody>
@@ -50,12 +84,18 @@
     <li>Choose your USA ROM.</li>
     <li>Save the result as a new file. Leave the original ROM unchanged.</li>
   </ol>
-  <p>A patched ROM has CRC32 <code>D22F542B</code>. The patch file itself has CRC32 <code>57AF999D</code>.</p>
   <p>Mesen ties the battery save to the ROM file name. Save the patched ROM under a new name if you want a separate save. Opening the original file name uses the original save.</p>
 
-  <h2>Also included</h2>
-  <p>The message window clears when you confirm the continue mark under a full message, and when the window fills. After a yes or no, older lines can stay until the window fills or you confirm the continue mark. That part is for a screen reader.</p>
-  <p>Battle tactics are available from the start. Each round you choose Fight, Run, or Tactics. Fight plays that round from the tactic you already picked. Tactics is where you change the plan.</p>
-  <p class="note">Source: <a href="https://github.com/dunjeon/DragonWarriorIV-SmartContext">github.com/dunjeon/DragonWarriorIV-SmartContext</a></p>
+  <h2>Checksums</h2>
+  <table>
+    <thead><tr><th>File</th><th>CRC32</th></tr></thead>
+    <tbody>
+      <tr><td>Unmodified USA ROM</td><td><code>F6B24806</code></td></tr>
+      <tr><td>Patched ROM</td><td><code>7AA6D320</code></td></tr>
+      <tr><td>This BPS (612 bytes)</td><td><code>F9FC774E</code></td></tr>
+    </tbody>
+  </table>
+  <p><code>F9FC774E</code> is the CRC32 of every byte except the last four. Those last four bytes store the same value, and Floating IPS checks it. A CRC32 of the whole file is the same for every valid BPS patch, so use <code>F9FC774E</code> and the 612-byte size when you check this download.</p>
+  <p>Release v1.0.0 is an older patch. Floating IPS rejects that file. A ROM made from it has checksum <code>D22F542B</code>, which is the previous version. Use the current download. Its patched ROM checksum is <code>7AA6D320</code>.</p>
 </body>
 </html>

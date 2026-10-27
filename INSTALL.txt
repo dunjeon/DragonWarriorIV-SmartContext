@@ -19,11 +19,54 @@ The Word file dragon-warrior-iv-rom-hack-notes.docx describes every change.
 
 If the patcher says the ROM does not match, the file is not the USA release this patch was built from. A headerless dump, a European ROM, or a ROM that was already patched will not match.
 
-On the field, A tries Talk, then Door, then Search. Talk looks one tile ahead, then two tiles if the first is empty. The closer person wins. Door runs only when the tile ahead is a door, and Search does not also run on that press. Select opens the command menu.
+A patched ROM has CRC32 7AA6D320.
+This BPS file is 612 bytes. Its CRC32 is F9FC774E.
+That checksum covers every byte except the last four. Those four bytes store the same value. A CRC32 of the whole file is the same for every valid BPS patch, so check F9FC774E and the file size.
+Release v1.0.0 is an older patch. Floating IPS rejects that file. Use this one.
 
-The message window also clears when you advance a full page. That part is for a screen reader.
+PAGE CLEAR
 
-Battle tactics are available from the start. Each round you choose Fight, Run, or Tactics. Fight plays that round from the tactic you already picked. Tactics is where you change the plan.
+The original message window scrolls and leaves old lines on screen. This patch clears the window. The next chunk is the only text in the box. The clear runs when you confirm the continue mark, and when the window is already full. After a yes or no, or any other choice a message asks for, older lines can stay until the window fills or you confirm the continue mark. This is for a screen reader, so it can speak the new text without reading the old lines first. The continue-mark clear and the full-window clear were kept after they were used in play.
+
+SMART A
+
+On the field, A tries Door, then Talk, then Search, and stops at the first one that applies.
+
+Door runs when the tile one step ahead is a real door. The original Door command runs, including a locked door and its message. Talk and Search do not run on that press. The game waits until you release A.
+
+A shop counter is stored like a door. Smart A still talks to the shopkeeper two tiles away. Door on the Select menu still uses the original Door command, including on a shop counter.
+
+Talk looks one tile ahead, then two tiles if the first is empty. The closer person wins.
+
+Search runs when nobody was there. It may say that nothing was found.
+
+Door comes first so a person on the far side of a door does not take the press that should open the door.
+
+THE SELECT MENU
+
+Select opens Talk, Spell, Status, Item, Equip, Tactics, Door, and Set AI. The old Search line is now Set AI. Smart A still searches.
+
+Menu Talk looks two tiles ahead. It can reach a person through a one-tile wall. It still says when nobody is there, and it still checks for an object in front of you. Smart A skips that object check.
+
+Release Select after you choose or cancel. Select opening the menu was checked in play.
+
+SET AI
+
+Set AI asks yes or no, then prints the result.
+
+Yes: the window says Player AI On. Tactics guide the controlled character the same way they guide the rest of the party.
+No: the window says Player AI Off. You enter that character's commands yourself.
+Cancel: the setting stays as it was.
+
+A new game starts off. Choose it on the field before battle. The choice holds for that fight. Fight, Run, and Tactics inside battle change the round. They leave this on or off setting alone. The other party members keep using tactics either way.
+
+On and Off were both checked in play.
+
+TACTICS FROM THE START
+
+Tactics are available from the first chapter. Each round you choose Fight, Run, or Tactics. Fight plays that round from the tactic already picked. Tactics changes the plan: Normal, Offensive, Defensive, Save MP, Use No MP, or Try Out. That screen can also change tactics, see spells, or see items.
+
+The tactic is the plan the round is fought with.
 
 Made with Grok by xAI.
 Fan project. Not made by Enix, Square, or Nintendo.
