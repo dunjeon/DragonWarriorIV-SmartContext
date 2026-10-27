@@ -12,7 +12,7 @@ The project is [MIT licensed](LICENSE).
 
 **[Download the patch](https://github.com/dunjeon/DragonWarriorIV-SmartContext/releases/latest)**
 
-Notes: [dragon-warrior-iv-rom-hack-notes.docx](dragon-warrior-iv-rom-hack-notes.docx)
+Notes: [dragon-warrior-iv-rom-hack-notes.md](dragon-warrior-iv-rom-hack-notes.md)
 
 Website: [dunjeon.github.io/DragonWarriorIV-SmartContext](https://dunjeon.github.io/DragonWarriorIV-SmartContext/)
 

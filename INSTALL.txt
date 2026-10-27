@@ -15,7 +15,7 @@ CRC32: F6B24806
 
 Mesen ties the battery save to the ROM file name. Save the patched ROM under a new name if you want a separate save. Opening the original file name uses the original save.
 
-The Word file dragon-warrior-iv-rom-hack-notes.docx describes every change.
+The notes are in dragon-warrior-iv-rom-hack-notes.md. GitHub shows that file as a page. A Word copy with the same text is dragon-warrior-iv-rom-hack-notes.docx.
 
 If the patcher says the ROM does not match, the file is not the USA release this patch was built from. A headerless dump, a European ROM, or a ROM that was already patched will not match.
 
