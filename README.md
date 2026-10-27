@@ -14,10 +14,6 @@ The project is [MIT licensed](LICENSE).
 
 Notes: [dragon-warrior-iv-rom-hack-notes.md](dragon-warrior-iv-rom-hack-notes.md)
 
-Website: [dunjeon.github.io/DragonWarriorIV-SmartContext](https://dunjeon.github.io/DragonWarriorIV-SmartContext/)
-
-GitHub shows this file on the repository page. The website is a separate page, so the same six features are written out there too.
-
 ## Page clear
 
 The original message window scrolls. When more text is waiting, a continue mark appears under the block. Confirming that mark slides the old lines up and leaves some of them on screen. A screen reader then speaks those old lines again before it reaches the new text.
