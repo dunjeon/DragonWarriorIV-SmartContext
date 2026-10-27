@@ -42,6 +42,8 @@ On the field, A tries three commands in order and stops at the first one that ap
 
 Door comes first so a person standing on the far side of a door does not take the button press that should open the door. You can still choose Talk, Door, or another command yourself from the Select menu.
 
+Door, Talk, and Search were checked in play. A door does not also Talk or Search on that press.
+
 ## The Select menu
 
 Select opens the command menu: Talk, Spell, Status, Item, Equip, Tactics, Door, and Set AI.

@@ -40,6 +40,8 @@ Talk looks one tile ahead, then two tiles if the first is empty. The closer pers
 
 Search runs when nobody was there. It may say that nothing was found.
 
+Door, Talk, and Search were checked in play. A door does not also Talk or Search on that press.
+
 Door comes first so a person on the far side of a door does not take the press that should open the door.
 
 THE SELECT MENU

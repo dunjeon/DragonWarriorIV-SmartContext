@@ -122,7 +122,7 @@ The Tactics line shows up from early in the game. Each round the choice is Fight
 
 Select opens the Command menu. Confirmed in play after the every-frame check replaced the old Select wait.
 
-Smart A tries Door, then Talk, then Search. Behavior `$17`, a shop counter, is not treated as a door on this path. If Door runs, that press waits until A is released and does not continue into Search. This has not been tried in play yet. The world-map move to bank `$16` `$BFB6` has not been proven in play either.
+Smart A tries Door, then Talk, then Search. Behavior `$17`, a shop counter, is not treated as a door on this path. If Door runs, that press waits until A is released and does not continue into Search. Door, Talk, and Search were confirmed in play. The world-map move to bank `$16` `$BFB6` has not been proven in play either.
 
 ## If something breaks
 
