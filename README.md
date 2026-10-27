@@ -1,8 +1,8 @@
 # Dragon Warrior IV — Smart Context
 
-A BPS patch for the USA NES game Dragon Warrior IV. It changes five parts of the game. Each one stands on its own: the message window, the A button, the Select menu, Set AI, and battle tactics.
+A BPS patch for the USA NES game Dragon Warrior IV. It changes six parts of the game. Each one stands on its own: the message window, the A button, the Select menu, Hunt, Set AI, and battle tactics.
 
-This repository does not include the game. You supply your own unmodified USA ROM. The patch file is 612 bytes.
+This repository does not include the game. You supply your own unmodified USA ROM. The patch file is 774 bytes.
 
 This is a fan project. It is not made by or affiliated with Enix, Square, or Nintendo.
 
@@ -16,7 +16,7 @@ Notes: [dragon-warrior-iv-rom-hack-notes.md](dragon-warrior-iv-rom-hack-notes.md
 
 Website: [dunjeon.github.io/DragonWarriorIV-SmartContext](https://dunjeon.github.io/DragonWarriorIV-SmartContext/)
 
-GitHub shows this file on the repository page. The website is a separate page, so the same five features are written out there too.
+GitHub shows this file on the repository page. The website is a separate page, so the same six features are written out there too.
 
 ## Page clear
 
@@ -34,25 +34,39 @@ On the field, A tries three commands in order and stops at the first one that ap
 
 1. Door, if the tile one step ahead is a real door. The original Door command runs, so a locked door still asks for its key and still prints its own message. Talk does not run on that press. Search does not run on that press. The game waits until you release A, so the next check cannot Search while your finger is still down.
 
-   A shop counter is stored in the same group of tiles as a door. Smart A leaves that counter alone and goes on to Talk, so the shopkeeper two tiles away is the person who answers. Door on the Select menu is still the original Door command, including on a shop counter.
+   A shop counter is stored in the same group of tiles as a door. Smart A leaves that counter alone and goes on to Talk, so the shopkeeper two tiles away is the person who answers.
 
-2. Talk, if that tile was not a door. Talk looks one tile ahead. If that tile is empty, it looks two tiles ahead. The closer person wins. The second look is there because a shopkeeper stands two tiles away, with the counter between you and them.
+2. Talk, if that tile was not a door. Talk looks one tile ahead. If that tile is empty, it looks two tiles ahead. The closer person wins. The second look is there because a shopkeeper stands two tiles away, with the counter between you and them. Talk still runs in a town or a dungeon, so a person walking in a dungeon can be talked to. On the world map, Talk stays quiet.
 
-3. Search, if nobody was there. Search may still say that nothing was found. That line is part of the command.
+3. Search, if nobody was there. Search may still say that nothing was found. That line is part of the command. On the world map, A searches, and the window shows that search's own line.
 
-Door comes first so a person standing on the far side of a door does not take the button press that should open the door. You can still choose Talk, Door, or another command yourself from the Select menu.
+Door comes first so a person standing on the far side of a door does not take the button press that should open the door. You can still choose Talk or another command yourself from the Select menu. Door is not on that menu. Smart A is the only Door command.
 
-Door, Talk, and Search were checked in play. A door does not also Talk or Search on that press.
+Door, Talk, and Search were checked in play, including A on the world map. A door does not also Talk or Search on that press.
 
 ## The Select menu
 
-Select opens the command menu: Talk, Spell, Status, Item, Equip, Tactics, Door, and Set AI.
+Select opens the command menu: Talk, Spell, Status, Item, Equip, Tactics, Hunt, and Set AI.
 
-The old Search line is now Set AI. Smart A still searches the ground, so the menu does not need a second Search command.
+The old Search line is now Set AI. The old Door line is now Hunt. Smart A still searches the ground and still opens doors, so the menu does not need a second Search command or a second Door command.
 
 Menu Talk looks two tiles ahead, and the closer person wins. It can reach a person through a one-tile wall. If both tiles are empty, it still says that nobody is there, and it still checks for an object in front of you. Smart A skips that object check and uses Door, then Talk, then Search instead.
 
 Release Select after you choose a command or cancel. The menu was checked in play: Select opens it, and it stays closed until you press Select again.
+
+## Hunt
+
+Hunt is the field command in the slot Door used to occupy. It asks the game's own yes or no question, then prints the result in the message window so a screen reader can speak it.
+
+- Yes. The window says Hunt On. Random encounters stay as they are in the original game.
+- No. The window says Hunt Off. Random monster fights do not start.
+- Cancel. The setting stays where it was.
+
+A new game starts on. Any save that has never been switched off stays on too.
+
+A boss or other scripted fight does not use the random-encounter roll, so that fight still happens when Hunt is off. Hunt does not change Set AI, and the battle Tactics menu does not change Hunt.
+
+The current build, including Hunt, was checked in play.
 
 ## Set AI
 
@@ -101,9 +115,9 @@ Mesen ties the battery save to the ROM file name. Save the patched ROM under a n
 | File | CRC32 |
 | --- | --- |
 | Unmodified USA ROM | `F6B24806` |
-| Patched ROM | `7AA6D320` |
-| This BPS | `F9FC774E` |
+| Patched ROM | `6DB88122` |
+| This BPS | `A0D50ED8` |
 
-The patch file is 612 bytes. `F9FC774E` is the CRC32 of every byte except the last four. Those last four bytes store the same value, and Floating IPS checks it. A CRC32 of the whole file is the same for every valid BPS patch, so use `F9FC774E` and the 612-byte size when you check this download.
+The patch file is 774 bytes. `A0D50ED8` is the CRC32 of every byte except the last four. Those last four bytes store the same value, and Floating IPS checks it. A CRC32 of the whole file is the same for every valid BPS patch, so use `A0D50ED8` and the 774-byte size when you check this download.
 
-Release v1.0.0 is an older patch. Floating IPS rejects that file. A ROM made from it has checksum `D22F542B`, which is the previous version. Use the current download. Its patched ROM checksum is `7AA6D320`.
+Release v1.1.0 is the previous patch. It does not include Hunt, and a ROM made from it has checksum `7AA6D320`. Release v1.0.0 is older, and Floating IPS rejects that file. A ROM made from it has checksum `D22F542B`. Use the current download. Its patched ROM checksum is `6DB88122`.

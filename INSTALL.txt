@@ -19,10 +19,10 @@ The notes are in dragon-warrior-iv-rom-hack-notes.md. GitHub shows that file as 
 
 If the patcher says the ROM does not match, the file is not the USA release this patch was built from. A headerless dump, a European ROM, or a ROM that was already patched will not match.
 
-A patched ROM has CRC32 7AA6D320.
-This BPS file is 612 bytes. Its CRC32 is F9FC774E.
-That checksum covers every byte except the last four. Those four bytes store the same value. A CRC32 of the whole file is the same for every valid BPS patch, so check F9FC774E and the file size.
-Release v1.0.0 is an older patch. Floating IPS rejects that file. Use this one.
+A patched ROM has CRC32 6DB88122.
+This BPS file is 774 bytes. Its CRC32 is A0D50ED8.
+That checksum covers every byte except the last four. Those four bytes store the same value. A CRC32 of the whole file is the same for every valid BPS patch, so check A0D50ED8 and the file size.
+Release v1.1.0 is the previous patch. It does not include Hunt, and its patched ROM checksum is 7AA6D320. Release v1.0.0 is older. Floating IPS rejects that file. Use this one.
 
 PAGE CLEAR
 
@@ -34,23 +34,35 @@ On the field, A tries Door, then Talk, then Search, and stops at the first one t
 
 Door runs when the tile one step ahead is a real door. The original Door command runs, including a locked door and its message. Talk and Search do not run on that press. The game waits until you release A.
 
-A shop counter is stored like a door. Smart A still talks to the shopkeeper two tiles away. Door on the Select menu still uses the original Door command, including on a shop counter.
+A shop counter is stored like a door. Smart A still talks to the shopkeeper two tiles away.
 
-Talk looks one tile ahead, then two tiles if the first is empty. The closer person wins.
+Talk looks one tile ahead, then two tiles if the first is empty. The closer person wins. Talk still runs in a town or a dungeon. On the world map, Talk stays quiet and A searches. The window shows that search's own line.
 
 Search runs when nobody was there. It may say that nothing was found.
 
-Door, Talk, and Search were checked in play. A door does not also Talk or Search on that press.
+Door, Talk, and Search were checked in play, including A on the world map. A door does not also Talk or Search on that press.
 
-Door comes first so a person on the far side of a door does not take the press that should open the door.
+Door comes first so a person on the far side of a door does not take the press that should open the door. Door is not on the Select menu. Smart A is the only Door command.
 
 THE SELECT MENU
 
-Select opens Talk, Spell, Status, Item, Equip, Tactics, Door, and Set AI. The old Search line is now Set AI. Smart A still searches.
+Select opens Talk, Spell, Status, Item, Equip, Tactics, Hunt, and Set AI. The old Search line is now Set AI. The old Door line is now Hunt.
 
 Menu Talk looks two tiles ahead. It can reach a person through a one-tile wall. It still says when nobody is there, and it still checks for an object in front of you. Smart A skips that object check.
 
 Release Select after you choose or cancel. Select opening the menu was checked in play.
+
+HUNT
+
+Hunt asks yes or no, then prints the result.
+
+Yes: the window says Hunt On. Random encounters stay as they are.
+No: the window says Hunt Off. Random monster fights do not start.
+Cancel: the setting stays as it was.
+
+A new game starts on. A boss or other scripted fight does not use the random-encounter roll, so that fight still happens when Hunt is off. Hunt does not change Set AI, and the battle Tactics menu does not change Hunt.
+
+The current build, including Hunt, was checked in play.
 
 SET AI
 
