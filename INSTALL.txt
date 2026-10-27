@@ -1,0 +1,29 @@
+Dragon Warrior IV — Smart Context
+
+This download is a patch. It does not include the game. You need your own unmodified USA ROM.
+
+File: Dragon Warrior IV (USA).nes
+Size: 524,304 bytes
+CRC32: F6B24806
+
+1. Install Floating IPS (FLIPS).
+   https://github.com/Alcaro/Flips/releases
+2. Choose Apply patch.
+3. Choose dragon-warrior-iv-usa-smart-context.bps
+4. Choose your USA ROM.
+5. Save the result as a new file. Leave your original ROM as it is.
+
+Mesen ties the battery save to the ROM file name. Save the patched ROM under a new name if you want a separate save. Opening the original file name uses the original save.
+
+The Word file dragon-warrior-iv-rom-hack-notes.docx describes every change.
+
+If the patcher says the ROM does not match, the file is not the USA release this patch was built from. A headerless dump, a European ROM, or a ROM that was already patched will not match.
+
+On the field, A tries Talk, then Door, then Search. Talk looks one tile ahead, then two tiles if the first is empty. The closer person wins. Door runs only when the tile ahead is a door, and Search does not also run on that press. Select opens the command menu.
+
+The message window also clears when you advance a full page. That part is for a screen reader.
+
+The Tactics line can appear early. Choosing it does not play the battle for you. You still enter fight commands.
+
+Made with Grok by xAI.
+Fan project. Not made by Enix, Square, or Nintendo.

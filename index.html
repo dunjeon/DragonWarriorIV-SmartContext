@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dragon Warrior IV — Smart Context</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { margin: 0 auto; max-width: 42rem; padding: 2.5rem 1.25rem 4rem; font: 1.05rem/1.55 system-ui, sans-serif; }
+    h1 { font-size: 1.8rem; line-height: 1.2; margin-bottom: 0.4rem; }
+    h2 { font-size: 1.2rem; margin-top: 2rem; }
+    a { color: inherit; }
+    .download { display: inline-block; margin: 1rem 0; padding: 0.7rem 1rem; background: #1f6feb; color: #fff; text-decoration: none; border-radius: 0.4rem; font-weight: 650; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { text-align: left; vertical-align: top; padding: 0.45rem 0.6rem; border-bottom: 1px solid #8884; }
+    code, pre { font-family: ui-monospace, monospace; }
+    ol li { margin: 0.35rem 0; }
+    .note { color: #888; }
+  </style>
+</head>
+<body>
+  <h1>Dragon Warrior IV — Smart Context</h1>
+  <p>A free patch for the USA NES game Dragon Warrior IV. On the field, the A button tries Talk, then Door, then Search. Select opens the command menu.</p>
+  <p>This page does not include the game. You use your own unmodified USA ROM. Fan project. Not made by or affiliated with Enix, Square, or Nintendo. Made with Grok by xAI. <a href="https://github.com/dunjeon/DragonWarriorIV-SmartContext">MIT license</a>.</p>
+  <p><a class="download" href="dragon-warrior-iv-usa-smart-context.bps">Download the BPS patch</a></p>
+  <p><a href="dragon-warrior-iv-rom-hack-notes.docx">ROM hack notes (Word)</a> cover every change, including how the page clear and the button checks were built.</p>
+
+  <h2>What A does</h2>
+  <ol>
+    <li>Talk. It looks one tile ahead. If that tile is empty, it looks two tiles ahead, which is how shop counters are set up. The closer person wins.</li>
+    <li>Door, if nobody was there and the tile one step ahead is a door. A locked door still uses the real Door command. Search does not also run on that press.</li>
+    <li>Search, if it was not a door. Search may still say that nothing was found.</li>
+  </ol>
+  <p>Select opens the old command menu: Talk, Spell, Status, Item, Equip, Tactics, Door, and Search. Release Select after you choose or cancel.</p>
+
+  <h2>Apply the patch</h2>
+  <p>The ROM must be the unmodified USA release. The patch checks this and refuses a different file.</p>
+  <table>
+    <thead><tr><th>Check</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>File name</td><td><code>Dragon Warrior IV (USA).nes</code></td></tr>
+      <tr><td>Size</td><td>524,304 bytes</td></tr>
+      <tr><td>CRC32</td><td><code>F6B24806</code></td></tr>
+    </tbody>
+  </table>
+  <ol>
+    <li>Install <a href="https://github.com/Alcaro/Flips/releases">Floating IPS (FLIPS)</a>.</li>
+    <li>Choose Apply patch.</li>
+    <li>Choose <code>dragon-warrior-iv-usa-smart-context.bps</code>.</li>
+    <li>Choose your USA ROM.</li>
+    <li>Save the result as a new file. Leave the original ROM unchanged.</li>
+  </ol>
+  <p>A patched ROM has CRC32 <code>D22F542B</code>. The patch file itself has CRC32 <code>57AF999D</code>.</p>
+  <p>Mesen ties the battery save to the ROM file name. Save the patched ROM under a new name if you want a separate save. Opening the original file name uses the original save.</p>
+
+  <h2>Also included</h2>
+  <p>The message window clears when you confirm the continue mark under a full message, and when the window fills. After a yes or no, older lines can stay until the window fills or you confirm the continue mark. That part is for a screen reader.</p>
+  <p>The Tactics command can appear before Chapter 5. Choosing a tactic does not enter fight commands for you.</p>
+  <p class="note">Source: <a href="https://github.com/dunjeon/DragonWarriorIV-SmartContext">github.com/dunjeon/DragonWarriorIV-SmartContext</a></p>
+</body>
+</html>
