@@ -23,7 +23,7 @@ On the field, A tries Talk, then Door, then Search. Talk looks one tile ahead, t
 
 The message window also clears when you advance a full page. That part is for a screen reader.
 
-The Tactics line can appear early. Choosing it does not play the battle for you. You still enter fight commands.
+Battle tactics are available from the start. Each round you choose Fight, Run, or Tactics. Fight plays that round from the tactic you already picked. Tactics is where you change the plan.
 
 Made with Grok by xAI.
 Fan project. Not made by Enix, Square, or Nintendo.

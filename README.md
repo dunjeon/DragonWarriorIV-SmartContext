@@ -42,7 +42,7 @@ Mesen ties the battery save to the ROM file name. Save the patched ROM under a n
 
 The message window clears when you confirm the continue mark, and when the window fills. Older lines can remain after a yes or no until the window fills or you confirm the continue mark. That behavior is aimed at a screen reader.
 
-The Tactics command can show up before Chapter 5. Choosing a tactic does not enter fight commands for you.
+Battle tactics are available from the start. Each round you choose Fight, Run, or Tactics. Fight plays that round from the tactic you already picked. Tactics is where you change the plan.
 
 ## Checksums
 
