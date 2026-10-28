@@ -1,8 +1,8 @@
 # Dragon Warrior IV — Smart Context
 
-A BPS patch for the USA NES game Dragon Warrior IV. It changes six parts of the game. Each one stands on its own: the message window, the A button, the Select menu, Hunt, Set AI, and battle tactics.
+A BPS patch for the USA NES game Dragon Warrior IV. It changes seven parts of the game. Each one stands on its own: the message window, the A button, the Select menu, Hunt, Set AI, battle tactics, and the dialogue font.
 
-This repository does not include the game. You supply your own unmodified USA ROM. The patch file is 774 bytes.
+This repository does not include the game. You supply your own unmodified USA ROM. The patch file is 854 bytes.
 
 This is a fan project. It is not made by or affiliated with Enix, Square, or Nintendo.
 
@@ -92,6 +92,18 @@ Tactics is where the plan changes. The plans are Normal, Offensive, Defensive, S
 
 The tactic is the plan the round is fought with. With Player AI On, it is also the plan for the controlled character. With Player AI Off, the rest of the party still fights from it while you enter your own commands.
 
+## Dialogue font
+
+Nine dialogue letters were redrawn. The rest of the alphabet is the original art.
+
+Zero is a box with a short upright stroke, so it does not match the round letter O. One has a flag and a wide foot. Lowercase f has a shorter crossbar. Lowercase m has gaps through the top. Lowercase w pinches at the bottom. The period is a two by two block. The comma is unchanged.
+
+Every letter is still 8 pixels wide. Lowercase i and lowercase l used to leave most of that box empty, so the next letter sat far to the right. Those two letters now use the capital pictures. A word like will is drawn as wILL. The stored text is still the same letters.
+
+The ink color is unchanged. The game still recolors it for day and night. The heavier menu alphabet, the window frame, and the continue mark are the original shapes.
+
+The letters load when the game starts. Reset the patched ROM to see them.
+
 ## Apply
 
 The ROM must be the unmodified USA file. Floating IPS checks the file and refuses a different one.
@@ -111,9 +123,9 @@ Mesen ties the battery save to the ROM file name. Save the patched ROM under a n
 | File | CRC32 |
 | --- | --- |
 | Unmodified USA ROM | `F6B24806` |
-| Patched ROM | `6DB88122` |
-| This BPS | `A0D50ED8` |
+| Patched ROM | `CE12F61E` |
+| This BPS | `8A42DF20` |
 
-The patch file is 774 bytes. `A0D50ED8` is the CRC32 of every byte except the last four. Those last four bytes store the same value, and Floating IPS checks it. A CRC32 of the whole file is the same for every valid BPS patch, so use `A0D50ED8` and the 774-byte size when you check this download.
+The patch file is 854 bytes. `8A42DF20` is the CRC32 of every byte except the last four. Those last four bytes store the same value, and Floating IPS checks it. A CRC32 of the whole file is the same for every valid BPS patch, so use `8A42DF20` and the 854-byte size when you check this download.
 
-Release v1.1.0 is the previous patch. It does not include Hunt, and a ROM made from it has checksum `7AA6D320`. Release v1.0.0 is older, and Floating IPS rejects that file. A ROM made from it has checksum `D22F542B`. Use the current download. Its patched ROM checksum is `6DB88122`.
+Release v1.2.0 is the previous patch. It does not include the dialogue font, and a ROM made from it has checksum `6DB88122`. Release v1.1.0 does not include Hunt, and a ROM made from it has checksum `7AA6D320`. Release v1.0.0 is older, and Floating IPS rejects that file. A ROM made from it has checksum `D22F542B`. Use the current download. Its patched ROM checksum is `CE12F61E`.

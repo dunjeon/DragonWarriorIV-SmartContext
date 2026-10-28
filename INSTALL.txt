@@ -19,10 +19,10 @@ The notes are in dragon-warrior-iv-rom-hack-notes.md. GitHub shows that file as 
 
 If the patcher says the ROM does not match, the file is not the USA release this patch was built from. A headerless dump, a European ROM, or a ROM that was already patched will not match.
 
-A patched ROM has CRC32 6DB88122.
-This BPS file is 774 bytes. Its CRC32 is A0D50ED8.
-That checksum covers every byte except the last four. Those four bytes store the same value. A CRC32 of the whole file is the same for every valid BPS patch, so check A0D50ED8 and the file size.
-Release v1.1.0 is the previous patch. It does not include Hunt, and its patched ROM checksum is 7AA6D320. Release v1.0.0 is older. Floating IPS rejects that file. Use this one.
+A patched ROM has CRC32 CE12F61E.
+This BPS file is 854 bytes. Its CRC32 is 8A42DF20.
+That checksum covers every byte except the last four. Those four bytes store the same value. A CRC32 of the whole file is the same for every valid BPS patch, so check 8A42DF20 and the file size.
+Release v1.2.0 is the previous patch. It does not include the dialogue font, and its patched ROM checksum is 6DB88122. Release v1.1.0 does not include Hunt, and its patched ROM checksum is 7AA6D320. Release v1.0.0 is older. Floating IPS rejects that file. Use this one.
 
 PAGE CLEAR
 
@@ -81,6 +81,18 @@ TACTICS FROM THE START
 Tactics are available from the first chapter. Each round you choose Fight, Run, or Tactics. Fight plays that round from the tactic already picked. Tactics changes the plan: Normal, Offensive, Defensive, Save MP, Use No MP, or Try Out. That screen can also change tactics, see spells, or see items.
 
 The tactic is the plan the round is fought with.
+
+DIALOGUE FONT
+
+Nine dialogue letters were redrawn. The rest of the alphabet is the original art.
+
+Zero is a box with a short upright stroke, so it does not match the round letter O. One has a flag and a wide foot. Lowercase f has a shorter crossbar. Lowercase m has gaps through the top. Lowercase w pinches at the bottom. The period is a two by two block. The comma is unchanged.
+
+Every letter is still 8 pixels wide. Lowercase i and lowercase l used to leave most of that box empty, so the next letter sat far to the right. Those two letters now use the capital pictures. A word like will is drawn as wILL. The stored text is still the same letters.
+
+The ink color is unchanged. The game still recolors it for day and night. The heavier menu alphabet, the window frame, and the continue mark are the original shapes.
+
+The letters load when the game starts. Reset the patched ROM to see them.
 
 Made with Grok by xAI.
 Fan project. Not made by Enix, Square, or Nintendo.

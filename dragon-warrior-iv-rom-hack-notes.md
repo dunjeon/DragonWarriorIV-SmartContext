@@ -1,10 +1,10 @@
 # Dragon Warrior IV NES ROM hack notes
 
-October 27, 2026. Notes for the screen-reader hack of the USA NES release. This file matches Smart Context v1.2.0.
+October 28, 2026. Notes for the screen-reader hack of the USA NES release. This file matches Smart Context v1.3.0.
 
 The working copy used to write this hack is named Dragon Warrior IV (USA) - page clear.nes. Other people get the same changes from the BPS patch `dragon-warrior-iv-usa-smart-context.bps`. Apply it to an unmodified USA ROM and save a new file. This document does not include the game.
 
-Every change is in that ROM. There is no Lua script and no Game Genie code. The original ROM file was not modified. 652 bytes differ from the original. The patched ROM CRC32 is `6DB88122`. The BPS is 774 bytes. Its target CRC32 is `6DB88122`. It includes page clear, Door then Talk then Search, the Select menu, Hunt, and Set AI. The ROM is still 524,304 bytes, and the iNES header is unchanged.
+Every change is in that ROM. There is no Lua script and no Game Genie code. The original ROM file was not modified. 693 bytes differ from the original. The patched ROM CRC32 is `CE12F61E`. The BPS is 854 bytes. Its target CRC32 is `CE12F61E`. It includes page clear, Door then Talk then Search, the Select menu, Hunt, Set AI, and the dialogue font. The ROM is still 524,304 bytes, and the iNES header is unchanged.
 
 ## What you can do in the game
 
@@ -24,11 +24,13 @@ The message log clears when you confirm the continue mark under a full message, 
 
 The battle Tactics command is on the menu from Chapter 1. Each round you choose Fight, Run, or a new tactic. After that choice, the party fights from the tactic you picked.
 
+Nine dialogue letters were redrawn so they are easier to tell apart. Zero is a box with a short upright stroke, so it does not match the round letter O. Lowercase i and lowercase l use the capital pictures, so the gap on their right is one pixel. A word such as will is drawn as wILL. The stored text is still the same letters. The ink color is the color the game already uses. The menu alphabet, the window frame, and the continue mark are the original shapes. The letters load when the game starts, so reset the ROM to see them.
+
 ## Files and saves
 
-Leave Dragon Warrior IV (USA).nes as it shipped. Apply the BPS to a copy and save that copy under a new name. The unmodified USA ROM is 524,304 bytes and its CRC32 is `F6B24806`. The patched ROM CRC32 is `6DB88122`. The BPS file is 774 bytes. Its CRC32 is `A0D50ED8`, which is the checksum of every byte except the final four. Those four bytes store the same value. Use Floating IPS.
+Leave Dragon Warrior IV (USA).nes as it shipped. Apply the BPS to a copy and save that copy under a new name. The unmodified USA ROM is 524,304 bytes and its CRC32 is `F6B24806`. The patched ROM CRC32 is `CE12F61E`. The BPS file is 854 bytes. Its CRC32 is `8A42DF20`, which is the checksum of every byte except the final four. Those four bytes store the same value. Use Floating IPS.
 
-Release v1.1.0 is the previous patch. Its target CRC32 is `7AA6D320`. It does not include Hunt, and it still has the world-map sentence bug. Release v1.0.0 is older still, and Floating IPS rejects that file. Its target CRC32 was `D22F542B`.
+Release v1.2.0 is the previous patch. Its target CRC32 is `6DB88122`. It does not include the dialogue font. Release v1.1.0 is older. Its target CRC32 is `7AA6D320`. It does not include Hunt, and it still has the world-map sentence bug. Release v1.0.0 is older still, and Floating IPS rejects that file. Its target CRC32 was `D22F542B`.
 
 Do not delete battery saves, and do not edit them by hand. MesenCE picks the save from the ROM file name. Opening the original file name uses the original save.
 
@@ -40,7 +42,7 @@ The cartridge is iNES mapper 1 (MMC1 / SUROM): 32 banks of 16 KB program ROM, an
 
 The field loop lives in the fixed bank, which the console maps at `$C000–$FFFF`. There are two copies of that bank, ROM banks `$0F` and `$1F`. The same field bytes were written to both. A change in only one copy works in some chapters and misses in others.
 
-Bank `$16`, mapped at `$8000`, holds the text engine and the moved world-map routine. Bank `$1E` holds the command menu, Talk, Door, and Search. Bank `$11` holds the battle AI hook. Bank `$17` holds Set AI and Hunt. Bank `$18` holds the encounter roll. Those banks do not share addresses. Bank `$16` `$BFB6` and bank `$11` `$BFB1` are different bytes.
+Bank `$16`, mapped at `$8000`, holds the text engine and the moved world-map routine. Bank `$1E` holds the command menu, Talk, Door, and Search. Bank `$11` holds the battle AI hook. Bank `$17` holds Set AI and Hunt. Bank `$18` holds the encounter roll and the dialogue font. Those banks do not share addresses. Bank `$16` `$BFB6` and bank `$11` `$BFB1` are different bytes.
 
 The game calls many routines with `BRK`. The byte after `BRK` is a signature, and the next byte is an argument. Some menu opens and flag tests are four bytes. A disassembler that treats `BRK` as one byte will lose its place. For the `$03` form, the byte after the argument is also read as data and then executed. The moved world-map routine contains that form (`00 5B 33` followed by `LDA #0`). Leave that pair alone.
 
@@ -84,6 +86,34 @@ Bank `$11` `$88CA` runs the original AI break and does not call `$BFB1`. `$8241`
 
 The field menu line that used to say Search now says Set AI. Smart A still searches, so the menu does not need its own Search command. Set AI opens the existing yes/no menu, script `$48`. Yes stores `$01` in SRAM `$6178` and the log says Player AI On. No stores `$00` and the log says Player AI Off. Cancel changes nothing. A new game, and any value other than `$01`, stays on manual commands, the same fight prompt as stock Dragon Quest IV. Set the flag on the field before a battle. It stays for that fight. The battle Tactics menu still changes the plan and does not write `$6178`. The other party members keep using tactics either way. When `$6178` is `$01`, `$BFB1` skips the fight prompt and the existing battle AI takes the turn. When it is not `$01`, the hero keeps the stock prompt, and a chapter lead is prompted from party slot 0. `$8219` is the original compare again. Set AI was confirmed in play. On leaves the controlled character to the tactic. Off gives that character the normal command menu. The two log lines are Huffman text in bank `$17`. Bank `$16` `$8028` calls `$83F0` first, and that hook skips the normal text seek only when `$51` is `$17`, after pulling the saved sentence number. `$51` is cleared after the line. The old Search jump at bank `$1E` `$8340` is now `JMP $FF70`. The Door jump at `$8343` is now `JMP $CC46`, the Hunt bridge. The menu label at bank `$16` `$B061` is HUNT, bytes `2C 39 32 38`. SET AI at `$B05B` is unchanged. Both fixed banks hold `BRK` index `$03`, argument `$78`, then `RTS`, which enters bank `$17` at `$BEE4`. Smart A still jumps to the old Search body at `$B3F3`. Each round the player still chooses Fight, Run, or Tactics. Fight plays the round from the tactic already picked. Tactics changes that plan.
 
+## Dialogue font
+
+The dialogue font is one bit per pixel, 8 bytes per glyph, in bank `$18` at `$B83D` through `$BC9D`. That block is 140 glyphs, indexes `$00` through `$8B`, at file offset `0x6384D`. Digits are `$00` through `$09`. Lowercase a through z are `$0A` through `$23`. Uppercase A through Z are `$24` through `$3D`. The period is `$77`. The heavier menu font starts at `$BC9D` and was left as it shipped. The loader at `$B798` was left as it shipped. It still writes eight zero bytes into the second bit plane, so each letter is still one color of ink. Day and night, and the other palette changes, recolor that ink. Do not change the font color.
+
+The plotter in bank `$16` copies exactly 8 bytes and then advances a fixed 8 pixels. There is no width table. The rightmost column is the one-pixel gap before the next letter.
+
+Nine glyphs differ from the original. Those nine account for 41 bytes. The other 1,079 bytes of this font are the original bytes.
+
+`$00`, zero, used to be nearly the same oval as the letter O. A diagonal slash was drawn first. In a line of text it read as a 9, so that slash was dropped. The glyph in the ROM is a square box with a one-pixel upright stroke in the middle. A one-pixel gap sits on each side of that stroke. The letter O stays round. The number 8 is unchanged.
+
+`$01`, one, has a small flag at the upper left and a wide foot. The stem is narrower, so the flag and the foot stick out.
+
+`$0F`, lowercase f, still has the hook at the top. The crossbar no longer runs the full width of the letter. Lowercase t still has a full-width bar.
+
+`$12`, lowercase i, uses the bitmap of capital I at `$2C`. Capital I was not edited. The text byte stored in a message is still lowercase i. Capital I has a bar across the top and a bar across the bottom, so the cell is full and the next letter sits one pixel away.
+
+`$13`, lowercase j, is a little narrower. The hook at the bottom is still there, and there is still a blank row under the dot.
+
+`$15`, lowercase l, uses the bitmap of capital L at `$2F`. Capital L was not edited. The text byte stored in a message is still lowercase l. A word such as will is drawn as wILL. The foot of L runs to the right edge of the cell, and that foot is what meets the next letter. The upright stroke itself still has open space beside it. That space is inside the letter.
+
+`$16`, lowercase m, used to fill the top row, so the two gaps were hidden. The top row is now open. The gaps go through the top. Each gap is one pixel.
+
+`$20`, lowercase w, used to fill the bottom row. The bottom now pinches into points, so the letter is not an m.
+
+`$77`, the period, used to be one pixel wide. It is now a 2 by 2 block on the same baseline. The comma at `$76` was left as it shipped.
+
+The window frame and the down-triangle continue mark at `$7F` are the original bytes. The letters load when the game starts. A ROM that is already running keeps the old shapes until it is reset on this file.
+
 ## Where the bytes are
 
 Addresses below are CPU addresses. Fixed-bank lines were written to both bank `$0F` and bank `$1F`. Switchable banks are the bank named in the row, mapped at `$8000`.
@@ -112,10 +142,11 @@ Addresses below are CPU addresses. Fixed-bank lines were written to both bank `$
 | Bank `$16` `$B61B` | Tactics menu check returns 1, so the command is listed from the start. |
 | Bank `$17` `$BF77` | Hunt yes/no. Yes stores `$00` at `$62D6`. No stores `$01`. Cancel returns before the store. |
 | Bank `$18` `$9BED` | Encounter roll calls `$BFC8`. Hunt Off (`$62D6` = `$01`) returns before a random fight. `$6288` bit 7 still does that when Hunt is on, and it still stops the day and night clock. Hunt does not use that bit. |
+| Bank `$18` `$B83D` | Dialogue font. Nine glyphs, 41 bytes: `$00`, `$01`, `$0F`, `$12`, `$13`, `$15`, `$16`, `$20`, and `$77`. Lowercase i and l use the capital I and L bitmaps. The loader at `$B798` and the menu font at `$BC9D` are unchanged. |
 
 ## Space that was used, and space to leave alone
 
-There was no spare bank. The Select handler fits in the bytes that used to spin on Select, from `$CA0E` through `$CA20`. `$CC46` through `$CC52` is the Hunt bridge. The menu preamble that used to live at `$CC68` now lives at bank `$17` `$BF5E`, and `$CC68` is the bank-switch opener plus the Select release wait. The smart-action bank switch sits in `$CC53` through `$CC62`, which had been four unused `NOP`s plus the bytes freed when the world-map tail moved. Talk, Door, and Search share `$80BA` through `$80F8`. `$80F8` is the last byte of the shared search. `$80F9` is the first byte of the original talk hit and was not overwritten. `$FF80` is `JMP $C913`, a tail call with the same result as the old `JSR $C913` / `RTS`. `$FF83` is `JSR $B2A6` and returns into the release wait at `$FF86`. Leave `$FF8E` as `JMP $C03D`. The two `NOP`s inside the `$FF74` frame wait were left in place so `$12` still counts at the old speed. `$FF70` through `$FF73` were the only shared `$FF` bytes in both fixed banks. They are now the Set AI bridge. The Set AI toggle and both of its log lines occupy bank `$17` `$BEE4` through `$BF5D`. The old menu preamble now starts at `$BF5E`. The Hunt routine, its pointer table, and the Hunt On and Hunt Off lines occupy `$BF77` through `$BFC5`. `$BFC6` through `$BFD7` is still `$FF`, and `$BFD8` stays the signature. Bank `$11` `$BFB1` through `$BFD7` is the fight-prompt gate, and `$BFD8` stays the signature. Bank `$18` `$BFC8` is the Hunt encounter check.
+There was no spare bank. The Select handler fits in the bytes that used to spin on Select, from `$CA0E` through `$CA20`. `$CC46` through `$CC52` is the Hunt bridge. The menu preamble that used to live at `$CC68` now lives at bank `$17` `$BF5E`, and `$CC68` is the bank-switch opener plus the Select release wait. The smart-action bank switch sits in `$CC53` through `$CC62`, which had been four unused `NOP`s plus the bytes freed when the world-map tail moved. Talk, Door, and Search share `$80BA` through `$80F8`. `$80F8` is the last byte of the shared search. `$80F9` is the first byte of the original talk hit and was not overwritten. `$FF80` is `JMP $C913`, a tail call with the same result as the old `JSR $C913` / `RTS`. `$FF83` is `JSR $B2A6` and returns into the release wait at `$FF86`. Leave `$FF8E` as `JMP $C03D`. The two `NOP`s inside the `$FF74` frame wait were left in place so `$12` still counts at the old speed. `$FF70` through `$FF73` were the only shared `$FF` bytes in both fixed banks. They are now the Set AI bridge. The Set AI toggle and both of its log lines occupy bank `$17` `$BEE4` through `$BF5D`. The old menu preamble now starts at `$BF5E`. The Hunt routine, its pointer table, and the Hunt On and Hunt Off lines occupy `$BF77` through `$BFC5`. `$BFC6` through `$BFD7` is still `$FF`, and `$BFD8` stays the signature. Bank `$11` `$BFB1` through `$BFD7` is the fight-prompt gate, and `$BFD8` stays the signature. Bank `$18` `$BFC8` is the Hunt encounter check. The dialogue font edit stays inside the existing cells at bank `$18` `$B83D`. No new routine was added for the font.
 
 Do not use these as free space:
 
@@ -148,3 +179,4 @@ If boarding a ship or entering a town from the world map fails, bank `$16` `$BFB
 - Boarding or entering a place fails: the routine at bank `$16` `$BFB6` is the suspect, because the fixed bank calls it without switching banks.
 - The first line of dialogue freezes: a page-clear call is running before the window size is set. `$8A6F` and `$8AA1` should still be `LDA $F8` / `RTS`, and `$8028` should be `JSR $83F0`. A `$51` value left at `$17` also makes the next message skip its seek.
 - Hunt Off still rolls random fights: `$62D6` should be `$01`, and bank `$18` `$9BED` should call `$BFC8`. Do not use bit 7 of `$6288` as the Hunt flag.
+- The letters still look like the original: reset on the patched ROM. The loader at bank `$18` `$B798` runs when the game starts. `$B83D` should hold the nine new glyphs. The menu font at `$BC9D` stays the original heavier alphabet.
