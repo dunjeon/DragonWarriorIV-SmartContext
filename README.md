@@ -1,8 +1,8 @@
 # Dragon Warrior IV — Smart Context
 
-A BPS patch for the USA NES game Dragon Warrior IV. It changes seven parts of the game. Each one stands on its own: the message window, the A button, the Select menu, Hunt, Set AI, battle tactics, and the dialogue font.
+A BPS patch for the USA NES game Dragon Warrior IV. It changes seven parts of the game. Each one stands on its own: the message window, the A button, the Select menu, Hunt, Set AI, battle tactics, and battle rewards. The dialogue font is the original.
 
-This repository does not include the game. You supply your own unmodified USA ROM. The patch file is 854 bytes.
+This repository does not include the game. You supply your own unmodified USA ROM. The patch file is 853 bytes.
 
 This is a fan project. It is not made by or affiliated with Enix, Square, or Nintendo.
 
@@ -92,17 +92,13 @@ Tactics is where the plan changes. The plans are Normal, Offensive, Defensive, S
 
 The tactic is the plan the round is fought with. With Player AI On, it is also the plan for the controlled character. With Player AI Off, the rest of the party still fights from it while you enter your own commands.
 
+## Battle rewards
+
+Winning a battle pays twice the experience and twice the gold. The same characters receive it as before, including people riding in the wagon when the wagon is along. A Star card already used this doubling for one battle, so that card still pays double. Shop sales, the casino, Taloon's story payments, and the king's 3,000 experience gift to Ragnar stay at the original amounts.
+
 ## Dialogue font
 
-Nine dialogue letters were redrawn. The rest of the alphabet is the original art.
-
-Zero is a box with a short upright stroke, so it does not match the round letter O. One has a flag and a wide foot. Lowercase f has a shorter crossbar. Lowercase m has gaps through the top. Lowercase w pinches at the bottom. The period is a two by two block. The comma is unchanged.
-
-Every letter is still 8 pixels wide. Lowercase i and lowercase l used to leave most of that box empty, so the next letter sat far to the right. Those two letters now use the capital pictures. A word like will is drawn as wILL. The stored text is still the same letters.
-
-The ink color is unchanged. The game still recolors it for day and night. The heavier menu alphabet, the window frame, and the continue mark are the original shapes.
-
-The letters load when the game starts. Reset the patched ROM to see them.
+The dialogue font is the original. Release v1.3.0 redrew some letters. This patch does not. The menu alphabet, the window frame, and the continue mark are the original shapes. The letters load when the game starts. Reset a ROM that is already running if it still shows older letters.
 
 ## Apply
 
@@ -123,9 +119,9 @@ Mesen ties the battery save to the ROM file name. Save the patched ROM under a n
 | File | CRC32 |
 | --- | --- |
 | Unmodified USA ROM | `F6B24806` |
-| Patched ROM | `CE12F61E` |
-| This BPS | `8A42DF20` |
+| Patched ROM | `01AA83F2` |
+| This BPS | `D90F7C4B` |
 
-The patch file is 854 bytes. `8A42DF20` is the CRC32 of every byte except the last four. Those last four bytes store the same value, and Floating IPS checks it. A CRC32 of the whole file is the same for every valid BPS patch, so use `8A42DF20` and the 854-byte size when you check this download.
+The patch file is 853 bytes. `D90F7C4B` is the CRC32 of every byte except the last four. Those last four bytes store the same value, and Floating IPS checks it. A CRC32 of the whole file is the same for every valid BPS patch, so use `D90F7C4B` and the 853-byte size when you check this download.
 
-Release v1.2.0 is the previous patch. It does not include the dialogue font, and a ROM made from it has checksum `6DB88122`. Release v1.1.0 does not include Hunt, and a ROM made from it has checksum `7AA6D320`. Release v1.0.0 is older, and Floating IPS rejects that file. A ROM made from it has checksum `D22F542B`. Use the current download. Its patched ROM checksum is `CE12F61E`.
+Release v1.3.0 is the previous patch. It includes the readable dialogue font and does not double battle rewards. A ROM made from it has checksum `CE12F61E`. Release v1.2.0 does not include that font, and a ROM made from it has checksum `6DB88122`. Release v1.1.0 does not include Hunt, and a ROM made from it has checksum `7AA6D320`. Release v1.0.0 is older, and Floating IPS rejects that file. A ROM made from it has checksum `D22F542B`. Use the current download. Its patched ROM checksum is `01AA83F2`.
